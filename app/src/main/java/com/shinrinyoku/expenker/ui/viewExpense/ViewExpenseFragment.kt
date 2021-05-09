@@ -1,4 +1,4 @@
-package com.shinrinyoku.expenker.ui.slideshow
+package com.shinrinyoku.expenker.ui.viewExpense
 
 import android.os.Bundle
 import android.view.LayoutInflater

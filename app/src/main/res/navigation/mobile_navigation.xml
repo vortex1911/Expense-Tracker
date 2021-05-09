@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.shinrinyoku.expenker.ui.gallery.GalleryFragment"
+        android:name="com.shinrinyoku.expenker.ui.uploadExpense.UploadExpenseFragment"
         android:label="@string/menu_upload_expense"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.shinrinyoku.expenker.ui.slideshow.ViewExpenseFragment"
+        android:name="com.shinrinyoku.expenker.ui.viewExpense.ViewExpenseFragment"
         android:label="@string/menu_view_expense"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

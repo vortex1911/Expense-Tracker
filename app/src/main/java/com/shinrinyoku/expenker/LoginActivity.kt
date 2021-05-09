@@ -1,4 +1,4 @@
-package com.shinrinyoku.cosker
+package com.shinrinyoku.expenker
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
-import com.shinrinyoku.expenker.HomeActivity
 import com.shinrinyoku.expenker.databinding.ActivityLoginBinding
 
 

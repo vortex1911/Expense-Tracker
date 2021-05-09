@@ -8,8 +8,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_upload_expense">Upload a Expense</string>
+    <string name="menu_view_expense">View Expenses</string>
     <string name="enter_expense_name">Enter Expense Name</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="capture_image">Capture Image</string>

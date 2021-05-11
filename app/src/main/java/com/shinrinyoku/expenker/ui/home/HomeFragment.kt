@@ -14,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.shinrinyoku.expenker.R
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.shinrinyoku.expenker.databinding.FragmentHomeBinding
 import java.io.File
 import java.io.IOException
@@ -29,30 +30,52 @@ class HomeFragment : Fragment() {
     private lateinit var photoURI: Uri
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+            ViewModelProvider(this).get(HomeViewModel::class.java)
 //        val root = inflater.inflate(R.layout.fragment_home, container, false)
 
-        binding = FragmentHomeBinding.inflate(inflater,container,false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
 //        val textView: TextView = root.findViewById(R.id.text_home)
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
-
-
+        var expenseName: String
+        var amount: Double
         binding.imageCaptureButton.setOnClickListener {
-            val expenseName: String = binding.expenseNameEditText.text.toString()
-            val amount: BigDecimal = binding.amountEditText.text.toString().toBigDecimal()
-
             dispatchTakePictureIntent(container?.context)
         }
+
+        binding.submitButton.setOnClickListener {
+            expenseName = binding.expenseNameEditText.text.toString()
+            amount = binding.amountEditText.text.toString().toDouble()
+            Log.d("Home Fragment","Submit clicked")
+            val db = Firebase.firestore
+
+            val expense = hashMapOf(
+                "username" to "elvislobo12@gmail.com",
+                "expenseName" to expenseName,
+                "amount" to amount
+            )
+
+            db.collection("expenseDetail")
+                .add(expense)
+                .addOnSuccessListener { documentReference ->
+                    Log.d("Home Fragment", "DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("Home Fragment", "Error adding document", e)
+                }
+
+        }
+
         return binding.root
     }
+
 
     private fun dispatchTakePictureIntent(context: Context?) {
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -65,7 +88,11 @@ class HomeFragment : Fragment() {
             photoFile?.also {
                 if (context != null) {
                     photoURI =
-                            FileProvider.getUriForFile(context, "com.shinrinyoku.android.fileprovider", it)
+                        FileProvider.getUriForFile(
+                            context,
+                            "com.shinrinyoku.android.fileprovider",
+                            it
+                        )
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
@@ -78,7 +105,7 @@ class HomeFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK) {
             val imageBitmap =
-                    MediaStore.Images.Media.getBitmap(activity?.contentResolver, photoURI)
+                MediaStore.Images.Media.getBitmap(activity?.contentResolver, photoURI)
             binding.imageView.setImageBitmap(imageBitmap)
         }
     }

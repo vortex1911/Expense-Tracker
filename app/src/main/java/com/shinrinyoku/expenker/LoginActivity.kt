@@ -9,6 +9,8 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.shinrinyoku.expenker.databinding.ActivityLoginBinding
+import com.shinrinyoku.expenker.firebase.FirebaseUtil
+import com.shinrinyoku.expenker.network.AuthService
 
 
 class LoginActivity : AppCompatActivity() {
@@ -21,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = FirebaseAuth.getInstance()
+        auth = FirebaseUtil.getAuth()
 
         binding.signInButton.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
@@ -42,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.editTextUserName.text.toString()
             val password = binding.editTextPassword.text.toString()
             if (email.isNotBlank() && password.isNotBlank()) {
+                binding.progressBar.visibility = View.VISIBLE
                 registerUser(email, password)
             } else {
                 binding.progressBar.visibility = View.INVISIBLE

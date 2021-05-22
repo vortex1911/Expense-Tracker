@@ -9,8 +9,6 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.shinrinyoku.expenker.databinding.ActivityLoginBinding
-import com.shinrinyoku.expenker.firebase.FirebaseUtil
-import com.shinrinyoku.expenker.network.AuthService
 
 
 class LoginActivity : AppCompatActivity() {
@@ -23,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = FirebaseUtil.getAuth()
+        auth = FirebaseAuth.getInstance()
 
         binding.signInButton.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
